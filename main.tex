@@ -404,16 +404,133 @@ This represents about \SI{19.6}{\percent} of the 2024 electricity consumption. T
 \section{Exercise 2. Production analysis}
 
 \subsection{Annual production by technology}
-To be completed.
+
+The production data are hourly average powers in megawatts. Annual electrical energy production by technology is calculated by summing the hourly values over the full year. Table~\ref{tab:exercise2-annual-prod} presents the annual energy produced by each technology and their share in the total production mix. The studied generation sources are onshore wind, solar photovoltaic, run-of-river hydro, natural gas, petroleum, and nuclear.
+
+\begin{table}[H]
+  \centering
+  \caption{Annual electricity production by technology in France, 2024.}
+  \label{tab:exercise2-annual-prod}
+  \begin{tabular}{lcc}
+    \toprule
+    Technology & Annual energy (TWh) & Share in mix (\%) \\
+    \midrule
+    Nuclear & 375.17 & 71.54 \\
+    Run-of-river hydro & 72.17 & 13.78 \\
+    Onshore wind & 58.98 & 11.27 \\
+    Gas & 8.68 & 1.66 \\
+    Solar PV & 6.34 & 1.21 \\
+    Oil & 2.16 & 0.41 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Nuclear generation dominates the French production mix in 2024, accounting for approximately 71.5\% of the studied production sources. This reflects the long-standing role of nuclear power in the French electricity system. Run-of-river hydroelectric and onshore wind are the next largest contributors, together representing about 25\% of production. Natural gas and petroleum have lower annual output, reflecting their function as flexible or backup resources for peak demand and system balancing. Solar photovoltaic production, while growing, remains relatively modest in the total mix at this stage of deployment.
 
 \subsection{Capacity factors}
-To be completed.
+
+The capacity factor is a key metric for comparing the efficiency of different generation technologies. It is defined as the ratio of actual annual energy production to the theoretical maximum energy that could be produced if the facility operated at full installed capacity for the entire year:
+
+\[
+f_c = \frac{E_{\mathrm{annual}}}{P_{\mathrm{installed}} \times 8784 \text{ hours}}.
+\]
+
+Table~\ref{tab:exercise2-capacity} presents the installed capacities, annual production, and capacity factors for each technology studied in France.
+
+\begin{table}[H]
+  \centering
+  \caption{Annual production, installed capacity, and capacity factors by technology, France 2024.}
+  \label{tab:exercise2-capacity}
+  \begin{tabular}{lccc}
+    \toprule
+    Technology & Capacity (MW) & Annual energy (TWh) & Capacity factor (\%) \\
+    \midrule
+    Nuclear & 61175 & 375.17 & 70.49 \\
+    Run-of-river hydro & 12896 & 72.17 & 63.87 \\
+    Onshore wind & 20757 & 58.98 & 32.39 \\
+    Gas & 12906 & 8.68 & 7.71 \\
+    Solar PV & 16825 & 6.34 & 4.30 \\
+    Oil & 4447 & 2.16 & 5.48 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Nuclear power exhibits the highest capacity factor at approximately 70.5\%, indicating that nuclear plants operate nearly continuously throughout the year except for planned maintenance and refueling outages. Run-of-river hydroelectric plants achieve a capacity factor of 63.9\%, which is relatively high because river flows are generally available year-round, although not fully controllable.
+
+Wind and solar technologies show considerably lower capacity factors. Onshore wind achieves 32.4\%, limited by intermittent wind conditions throughout the year. Solar photovoltaic has the lowest capacity factor at 4.3\% due to the fundamental constraint of daylight availability and cloud cover. These lower factors are characteristic of renewable technologies and necessitate supporting capacity or storage in systems with high renewable penetration.
+
+Natural gas and petroleum have the lowest capacity factors among the technologies studied, at 7.7\% and 5.5\% respectively. This reflects their role as flexible resources that operate primarily during peak demand periods and for system balancing, rather than as baseload generation.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.95\textwidth]{figures/exercise_2-2.pdf}
+  \caption{Capacity factors by production technology in France, 2024. Nuclear and hydro achieve the highest utilization rates, while solar and petroleum operate infrequently.}
+  \label{fig:exercise2-capacity-factors}
+\end{figure}
 
 \subsection{Net consumption time series}
-To be completed.
+
+In a real power system, the electricity demand must be met by generation sources that are either dispatchable or managed through storage and demand response. Variable renewable generation (wind and solar) cannot reliably meet demand on their own and must be considered as reducing the net demand that must be supplied by controllable sources. The net consumption is defined as:
+
+\[
+\text{net consumption} = \text{gross consumption} - \text{must-run production},
+\]
+
+where must-run production comprises the intermittent renewable sources: onshore wind, solar photovoltaic, and run-of-river hydro. This definition assumes these resources are fully utilized whenever available, and the remaining demand is supplied by dispatchable generation, energy storage, or imports.
+
+Table~\ref{tab:exercise2-net-consumption} summarizes the statistics of gross consumption, must-run production, and net consumption for 2024.
+
+\begin{table}[H]
+  \centering
+  \caption{Summary statistics of gross consumption, must-run renewable production, and net consumption, France 2024.}
+  \label{tab:exercise2-net-consumption}
+  \begin{tabular}{lccc}
+    \toprule
+    Quantity & Mean (GW) & Maximum (GW) & Minimum (GW) \\
+    \midrule
+    Gross consumption & 49.06 & 82.80 & 29.58 \\
+    Must-run production & 11.55 & 37.51 & 0.08 \\
+    Net consumption & 37.51 & 73.38 & -4.08 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+The average net consumption is 37.51 GW, representing approximately 76.4\% of average gross consumption. The mean must-run production is 11.55 GW, or 23.5\% of average gross consumption. Notably, net consumption can become negative when renewable generation exceeds total demand. In 2024, the minimum net consumption reaches 4.08 GW below zero, indicating periods when renewable production alone would exceed demand. In a real system, such situations require demand management, exports, or curtailment of renewable generation.
+
+Figure~\ref{fig:exercise2-net-consumption} displays the hourly net consumption time series throughout 2024. The seasonal pattern remains visible, with higher average net demand during winter months and lower demand in summer. However, the variability is dampened compared to gross consumption because renewable production tends to contribute more during winter months when wind speeds are typically higher, partially offsetting the elevated heating demand.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.95\textwidth]{figures/exercise_2-3.pdf}
+  \caption{Hourly net electricity consumption in France, 2024. Net consumption represents the demand that must be supplied by controllable generation, storage, or imports after accounting for must-run renewable production.}
+  \label{fig:exercise2-net-consumption-ts}
+\end{figure}
+
+A comparative view of gross and net consumption is shown in Figure~\ref{fig:exercise2-gross-net}. The difference between the two curves illustrates the magnitude of renewable production at each point in time. The decoupling is most apparent during autumn and winter, when wind generation is typically higher, while summer months show smaller differences due to reduced wind availability.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.95\textwidth]{figures/exercise_2-3_gross_net.pdf}
+  \caption{Gross and net electricity consumption in France, 2024. The vertical gap between the curves represents the must-run renewable production at each hour.}
+  \label{fig:exercise2-gross-net}
+\end{figure}
 
 \subsection{Net load duration curve}
-To be completed.
+
+The load duration curve is a classical tool in power system planning that shows how many hours per year the system must supply a given load level or greater. It is obtained by sorting all hourly load values in decreasing order and plotting them against the corresponding number of hours. This representation is particularly useful for sizing generation capacity and understanding the frequency of different demand regimes.
+
+Figure~\ref{fig:exercise2-ldc} compares the load duration curves of gross consumption and net consumption. The horizontal axis represents the cumulative number of hours per year for which the load equals or exceeds the value on the vertical axis.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.95\textwidth]{figures/exercise_2-4.pdf}
+  \caption{Load duration curves for gross and net consumption, France 2024. The net load duration curve is consistently below the gross curve because variable renewable production reduces residual demand at all times.}
+  \label{fig:exercise2-ldc}
+\end{figure}
+
+The net load duration curve lies entirely below the gross load duration curve, reflecting the reduction in residual demand provided by renewable generation. The average demand reduction is 11.55 GW, equivalent to 23.5\% of average gross consumption. However, the vertical separation between the two curves is not constant. During peak-load hours (left side of the curve), the gap is often smaller because peak demand typically occurs during winter evenings when wind generation may be significant but is not always guaranteed. Conversely, during low-load periods (right side of the curve), the gap can be substantial if renewable resources are particularly abundant.
+
+The net load duration curve is the appropriate demand profile for sizing dispatchable generation, energy storage, and import capacity in a system where renewables are prioritized. The maximum net load reaches approximately 73 GW, while the minimum dips below zero, indicating the need for demand flexibility or export capacity to handle surplus renewable generation. The shape of the net load curve, showing a relatively flat middle section and steep rise toward peak loads, is typical of systems with significant variable renewable penetration and implies that backup capacity must be maintained to handle peak-demand situations.
 
 \section{Exercise 3. Optimization of an adapted generation fleet}
 
