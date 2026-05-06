@@ -296,6 +296,11 @@ This report studies the structure and decarbonization constraints of the French 
 %\vspace{-1cm}
 %\noindent
 
+\section*{Introduction}
+\addcontentsline{toc}{section}{Introduction}
+
+This report follows the lab exercise on the decarbonization of an electricity generation fleet. The analysis is based on hourly French electricity data for 2024, originally sourced from the CentraleSupélec Edunao platform and made available by the course professors. The code, notebooks, figures, and report sources are available on GitHub.\footnote{\url{https://github.com/baunilhamarga/tp-climat.git}} The calculations use simplified power-system planning tools to connect demand, production, residual load, and generation costs. The aim is to identify the main orders of magnitude rather than to reproduce the full operation of the French electricity system. For this reason, the calculations neglect market mechanisms, interconnections, detailed operational constraints, and dynamic unit commitment effects. The results should therefore be read as a structured technical approximation of the planning problem.
+
 \section{Exercise 1. Consumption analysis}
 
 The input data for this section are the hourly values in \texttt{Donnees\_France\_2024\_fr\_cet.csv}. The load column is interpreted as an hourly average active power in megawatts. Since each entry represents one hour, the annual electrical energy is obtained by summing the hourly powers and expressing the result in megawatt-hours. Per-capita quantities use the metropolitan France population at 1 January 2024, equal to 66.380 million inhabitants according to INSEE.\footnote{\url{https://www.insee.fr/fr/statistiques/5225246}}
