@@ -14,7 +14,6 @@ The project uses hourly French electricity data for 2024 to study consumption, p
 - `edunao-files/`: source data and course/lab PDFs.
 - `figures/`: exported PDF figures used in the report.
 - `main.tex`: LaTeX source for the report.
-- `output/`: LaTeX compilation outputs, including `output/main.pdf`.
 - `requirements.txt`: pinned Python environment exported from the local `climat` environment.
 
 ## Python Environment
@@ -41,16 +40,10 @@ python -m ipykernel install --user --name climat --display-name climat
 
 ## Report
 
-The report is compiled from `main.tex`. Build artifacts are written to `output/`.
+The report is compiled from `main.tex`.
 
 ```bash
-latexmk -pdf -interaction=nonstopmode -halt-on-error -file-line-error -output-directory=output main.tex
-```
-
-The compiled PDF is:
-
-```text
-output/main.pdf
+latexmk -pdf -interaction=nonstopmode -halt-on-error -file-line-error main.tex
 ```
 
 ## Figures
