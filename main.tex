@@ -497,7 +497,7 @@ Table~\ref{tab:exercise2-net-consumption} summarizes the statistics of gross con
 
 The average net consumption is 37.51 GW, representing approximately 76.4\% of average gross consumption. The mean must-run production is 11.55 GW, or 23.5\% of average gross consumption. Notably, net consumption can become negative when renewable generation exceeds total demand. In 2024, the minimum net consumption reaches 4.08 GW below zero, indicating periods when renewable production alone would exceed demand. In a real system, such situations require demand management, exports, or curtailment of renewable generation.
 
-Figure~\ref{fig:exercise2-net-consumption} displays the hourly net consumption time series throughout 2024. The seasonal pattern remains visible, with higher average net demand during winter months and lower demand in summer. However, the variability is dampened compared to gross consumption because renewable production tends to contribute more during winter months when wind speeds are typically higher, partially offsetting the elevated heating demand.
+Figure~\ref{fig:exercise2-net-consumption-ts} displays the hourly net consumption time series throughout 2024. The seasonal pattern remains visible, with higher average net demand during winter months and lower demand in summer. However, the variability is dampened compared to gross consumption because renewable production tends to contribute more during winter months when wind speeds are typically higher, partially offsetting the elevated heating demand.
 
 \begin{figure}[H]
   \centering
@@ -534,20 +534,171 @@ The net load duration curve is the appropriate demand profile for sizing dispatc
 
 \section{Exercise 3. Optimization of an adapted generation fleet}
 
-\subsection{Annualized investment cost}
-To be completed.
+\subsection{Economic assumptions and annualized investment cost}
+
+The objective of this exercise is to size a simplified dispatchable generation fleet able to supply the net demand obtained in Exercise 2. The model considers four thermal technologies: nuclear, coal, combined-cycle gas turbine, and open-cycle oil turbine. The annualized investment cost is taken as 8\% of the investment cost. For a plant of \SI{1}{\mega\watt} electrical capacity, this gives the fixed annual costs shown in Table~\ref{tab:exercise3-investment}.
+
+\begin{table}[H]
+  \centering
+  \caption{Investment assumptions and annualized fixed costs for \SI{1}{\mega\watt} of capacity.}
+  \label{tab:exercise3-investment}
+  \begin{tabular}{lcc}
+    \toprule
+    Technology & Capex (MEUR/MW) & Annualized investment (kEUR/MW/year) \\
+    \midrule
+    Nuclear & 6.0 & 480 \\
+    Coal & 1.5 & 120 \\
+    Gas CCGT & 1.0 & 80 \\
+    Oil OCGT & 0.7 & 56 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Nuclear power has the highest fixed cost because of its high capital intensity. Oil and gas turbines have much lower fixed costs, which makes them suitable candidates for infrequent operation despite their higher variable costs.
 
 \subsection{Fuel and carbon costs}
-To be completed.
+
+The fuel cost per electrical megawatt-hour is obtained by dividing the thermal fuel cost by the electrical efficiency. The carbon cost is computed with a carbon price of \SI{80}{EUR/tCO2}. Table~\ref{tab:exercise3-variable-costs} summarizes the resulting variable costs.
+
+\begin{table}[H]
+  \centering
+  \caption{Fuel, carbon, and total variable costs.}
+  \label{tab:exercise3-variable-costs}
+  \begin{tabular}{lcccc}
+    \toprule
+    Technology & Efficiency & Fuel cost & CO2 cost & Variable cost \\
+    & & (EUR/MWh$_e$) & (EUR/MWh$_e$) & (EUR/MWh$_e$) \\
+    \midrule
+    Nuclear & 0.35 & 14.29 & 0.00 & 14.29 \\
+    Coal & 0.40 & 25.00 & 80.00 & 105.00 \\
+    Gas CCGT & 0.60 & 50.00 & 32.00 & 82.00 \\
+    Oil OCGT & 0.35 & 142.86 & 48.00 & 190.86 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+The carbon price has a strong effect on coal. Although coal has a lower fuel cost than gas in thermal energy terms, its emissions make its variable cost higher than the gas combined-cycle plant. Nuclear has the lowest variable cost because the assumed direct CO2 intensity is zero and the fuel cost is low after conversion to electrical output.
 
 \subsection{Production cost as a function of operating hours}
-To be completed.
 
-\subsection{Optimal generation capacities}
-To be completed.
+For \SI{1}{\mega\watt} of capacity, the annual cost of each technology is written as
+\[
+C(h) = C_{\mathrm{fixed}} + c_{\mathrm{var}} h,
+\]
+where \(h\) is the number of full-load operating hours during the year. Figure~\ref{fig:exercise3-screening} shows the resulting screening curves.
 
-\subsection{Annual dispatch and cost assessment}
-To be completed.
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.82\textwidth]{figures/exercise_3-4.pdf}
+  \caption{Screening curves for the candidate dispatchable technologies.}
+  \label{fig:exercise3-screening}
+\end{figure}
+
+The lower envelope of these curves gives the least-cost technology for each operating duration. Oil is competitive only for very short operating times because of its low fixed cost and high variable cost. Gas is least-cost for intermediate use. Nuclear becomes least-cost for long operating durations because its low variable cost offsets its high fixed cost. Coal is not on the least-cost envelope under the assumed carbon price.
+
+\subsection{Competitive operating intervals}
+
+The operating intervals obtained from the screening curves are reported in Table~\ref{tab:exercise3-intervals}. The transition between oil and gas occurs after approximately 220 operating hours per year. The transition between gas and nuclear occurs after approximately 5907 operating hours per year.
+
+\begin{table}[H]
+  \centering
+  \caption{Least-cost technology by annual operating duration.}
+  \label{tab:exercise3-intervals}
+  \begin{tabular}{lcc}
+    \toprule
+    Least-cost technology & From (h/year) & To (h/year) \\
+    \midrule
+    Oil OCGT & 0 & 220 \\
+    Gas CCGT & 221 & 5907 \\
+    Nuclear & 5908 & 8784 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+The absence of coal is a direct consequence of the cost assumptions. Its fixed cost is lower than nuclear, but its variable cost is high once CO2 is priced. It is also more expensive than gas for intermediate operation.
+
+\subsection{Optimal capacities from the net load duration curve}
+
+The net load duration curve from Exercise 2 is used to allocate capacity to the least-cost technologies. The load exceeded for only a few hours is assigned to oil. The intermediate part of the curve is assigned to gas. The base part, corresponding to long operation durations, is assigned to nuclear. This gives the simplified optimal fleet in Table~\ref{tab:exercise3-capacity-comparison}.
+
+\begin{table}[H]
+  \centering
+  \caption{Simplified optimal dispatchable capacities and installed French capacities.}
+  \label{tab:exercise3-capacity-comparison}
+  \begin{tabular}{lcc}
+    \toprule
+    Technology & Simplified optimum (GW) & Installed capacity in France (GW) \\
+    \midrule
+    Nuclear & 30.91 & 61.37 \\
+    Coal & 0.00 & 1.81 \\
+    Gas CCGT & 28.49 & 13.13 \\
+    Oil OCGT & 13.81 & 3.04 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+The simplified optimum is very different from the installed French fleet. Nuclear capacity is lower than the actual installed value, while gas and oil capacities are higher. This result does not mean that the real fleet is oversized or poorly designed. The model excludes exports, imports, reserve margins, maintenance scheduling, hydro reservoirs, storage, demand response, unit commitment constraints, and network constraints. It also treats all residual demand as if it had to be met by only the four candidate technologies.
+
+\subsection{Modeled dispatch and comparison with real production}
+
+The simplified dispatch is obtained by stacking the optimal capacities in merit order. Nuclear supplies the base layer up to its optimized capacity. Gas supplies the remaining intermediate demand. Oil supplies the highest residual peaks. Coal is not dispatched because its optimized capacity is zero.
+
+Figure~\ref{fig:exercise3-dispatch-annual} compares the modeled dispatchable production with the recorded production over the full year. Figure~\ref{fig:exercise3-dispatch-week} gives a one-week zoom during a winter period.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.95\textwidth]{figures/exercise_3-7_annual.pdf}
+  \caption{Modeled and recorded dispatchable production over 2024.}
+  \label{fig:exercise3-dispatch-annual}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.95\textwidth]{figures/exercise_3-7_week.pdf}
+  \caption{Modeled and recorded dispatchable production from 8 to 15 January 2024.}
+  \label{fig:exercise3-dispatch-week}
+\end{figure}
+
+Table~\ref{tab:exercise3-dispatch-energy} compares the annual modeled energy with the recorded production. The modeled nuclear output is lower than the recorded nuclear output, while modeled gas generation is higher. This follows from the optimized capacity allocation and from the simplified treatment of the residual demand. In reality, nuclear production is not only a cost result. It is also affected by maintenance schedules, availability, operational constraints, exports, market operation, and system reserves. Gas production in the model absorbs a large fraction of residual variability because hydro reservoirs, imports, exports, and storage are not represented.
+
+\begin{table}[H]
+  \centering
+  \caption{Modeled and recorded annual dispatchable generation.}
+  \label{tab:exercise3-dispatch-energy}
+  \begin{tabular}{lcc}
+    \toprule
+    Technology & Modeled generation (TWh) & Recorded generation (TWh) \\
+    \midrule
+    Nuclear & 259.83 & 360.10 \\
+    Gas CCGT & 57.69 & 17.23 \\
+    Oil OCGT & 1.04 & 1.39 \\
+    Coal & 0.00 & 0.60 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{Annual investment, fuel, and CO2 costs}
+
+The annual cost breakdown for the simplified optimized fleet is given in Table~\ref{tab:exercise3-costs}. Investment costs are computed from the optimized capacities. Fuel and CO2 costs are computed from modeled annual generation.
+
+\begin{table}[H]
+  \centering
+  \caption{Annual cost breakdown for the simplified optimized fleet.}
+  \label{tab:exercise3-costs}
+  \begin{tabular}{lccccc}
+    \toprule
+    Technology & Capacity & Energy & Investment & Fuel & CO2 \\
+    & (GW) & (TWh) & (bn EUR/year) & (bn EUR/year) & (bn EUR/year) \\
+    \midrule
+    Nuclear & 30.91 & 259.83 & 14.835 & 3.712 & 0.000 \\
+    Coal & 0.00 & 0.00 & 0.000 & 0.000 & 0.000 \\
+    Gas CCGT & 28.49 & 57.69 & 2.279 & 2.884 & 1.846 \\
+    Oil OCGT & 13.81 & 1.04 & 0.773 & 0.149 & 0.050 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+The total modeled annual cost is EUR 26.53 billion per year for \SI{318.6}{\tera\watt\hour} of net demand served. This corresponds to an average modeled cost of approximately \SI{83.3}{EUR/MWh}. Nuclear accounts for most of the investment cost and most of the energy production. Gas accounts for a significant share of fuel and CO2 costs because it supplies the intermediate residual demand. Oil has a high variable cost but a limited energy contribution, so its total annual cost remains moderate despite its large peak capacity.
 
 \section{Exercise 4. Storage sizing}
 
