@@ -11,6 +11,7 @@ The project uses hourly French electricity data for 2024 to study consumption, p
 - `Exercise 2.ipynb`: production analysis and net demand construction.
 - `Exercise 3.ipynb`: simplified dispatchable fleet optimization.
 - `Exercise 4.ipynb`: storage-related analysis.
+- `Exercise 5.ipynb`: optional scenarios on consumption evolution and residual demand.
 - `edunao-files/`: source data and course/lab PDFs.
 - `figures/`: exported PDF figures used in the report.
 - `main.tex`: LaTeX source for the report.
