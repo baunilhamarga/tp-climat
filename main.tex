@@ -708,13 +708,125 @@ The total modeled annual cost is EUR 26.53 billion per year for \SI{318.6}{\tera
 \section{Exercise 4. Storage sizing}
 
 \subsection{Statistical distribution of net demand}
-To be completed.
+
+The first step is to examine the daily structure of the residual demand. The net demand is the same as in Exercise 2 and Exercise 3, namely the gross consumption minus onshore wind, photovoltaic production, and run-of-river hydro production. For each hour of the day, the 2024 hourly values were grouped by local date. Since 2024 is a leap year, the data set contains 366 daily values for each hour rather than 365.
+
+Figure~\ref{fig:exercise4-hourly-distribution} shows the resulting statistical distribution. The boxplots give the variability of the net demand at each hour of the day across the year.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.9\textwidth]{figures/exercise_4-1.pdf}
+  \caption{Statistical distribution of net demand by hour of day, France 2024.}
+  \label{fig:exercise4-hourly-distribution}
+\end{figure}
+
+The lowest average residual demand occurs during the night and early morning. The mean net demand is about \SI{31.34}{\giga\watt} at 04:00, compared with \SI{40.89}{\giga\watt} at 19:00. The evening hours are therefore the most constraining for peak supply. The distribution is also wide, which reflects the combined effect of temperature, weekday activity, solar generation, and wind variability.
+
+\begin{table}[H]
+  \centering
+  \caption{Selected statistics of net demand by hour of day.}
+  \label{tab:exercise4-hourly-statistics}
+  \begin{tabular}{lcccc}
+    \toprule
+    Hour & Mean & Median & P10 & P90 \\
+    & (GW) & (GW) & (GW) & (GW) \\
+    \midrule
+    00:00 & 36.99 & 34.85 & 28.81 & 47.88 \\
+    04:00 & 31.34 & 28.71 & 23.12 & 42.56 \\
+    12:00 & 36.63 & 34.02 & 26.82 & 48.41 \\
+    19:00 & 40.89 & 38.89 & 30.34 & 54.28 \\
+    23:00 & 39.14 & 37.29 & 31.42 & 49.64 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+These values confirm the interest of short-duration storage. A storage unit charged during low residual demand and discharged during the evening peak can reduce the need for peak thermal generation. The effect is limited by the storage energy capacity and by the difference in marginal generation cost between the charging and discharging periods.
 
 \subsection{Daily storage operation}
-To be completed.
+
+The storage unit considered here has a maximum charging and discharging power of \SI{1}{\mega\watt} and an energy capacity of \SI{2}{\mega\watt\hour}. A simple daily operation rule was used. For each local day, the unit charges at \SI{1}{\mega\watt} during the two hours with the lowest net demand and discharges at \SI{1}{\mega\watt} during the two hours with the highest net demand. Losses are neglected, so the daily charged and discharged energies are both equal to \SI{2}{\mega\watt\hour}.
+
+Figure~\ref{fig:exercise4-storage-week} illustrates this operation for the week from 8 to 15 January 2024. The change is small at the national scale because the storage unit is only \SI{1}{\mega\watt}, while the residual demand is measured in gigawatts. The economic calculation is therefore made per storage unit.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.9\textwidth]{figures/exercise_4-2.pdf}
+  \caption{Effect of a \SI{1}{\mega\watt}/\SI{2}{\mega\watt\hour} storage unit on net demand for one winter week.}
+  \label{fig:exercise4-storage-week}
+\end{figure}
+
+The dispatchable fleet from Exercise 3 was used to value the storage operation. The production stack is nuclear, then combined-cycle gas, then open-cycle oil. The storage unit avoids production during high-demand hours and adds production during low-demand hours. The annual fuel saving is obtained by comparing the fuel cost of the dispatch before and after storage operation. Avoided emissions are computed in the same way from the CO2 intensities of the displaced generation.
+
+\begin{table}[H]
+  \centering
+  \caption{Annual value of the \SI{1}{\mega\watt}/\SI{2}{\mega\watt\hour} storage unit in the simplified model.}
+  \label{tab:exercise4-storage-results}
+  \begin{tabular}{lc}
+    \toprule
+    Quantity & Value \\
+    \midrule
+    Avoided fuel cost & \SI{19429}{EUR/year} \\
+    Avoided production investment cost & \SI{56000}{EUR/year} \\
+    Avoided CO2 emissions & \SI{184}{tCO2/year} \\
+    Avoided CO2 cost equivalent at \SI{80}{EUR/tCO2} & \SI{14720}{EUR/year} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+The avoided investment cost was valued as \SI{1}{\mega\watt} of avoided open-cycle oil turbine capacity, since this technology supplies the rare peak hours in the simplified optimal fleet. This gives \SI{56000}{EUR/year}. The fuel saving is smaller than the avoided investment value because the unit shifts only \SI{2}{\mega\watt\hour} per day. The CO2 reduction is \SI{184}{tCO2/year}, which corresponds to \SI{14720}{EUR/year} at the assumed carbon price.
 
 \subsection{Electric vehicle charging case}
-To be completed.
+
+The final case considers the charging of 1000 electric vehicles. The maximum charging power is \SI{7}{\kilo\watt} per vehicle, giving a fleet charging power of \SI{7}{\mega\watt}. The annual distance and consumption assumptions are the same as in Exercise 1, namely \SI{11700}{\kilo\meter} per vehicle and \SI{18}{\kilo\watt\hour} per \SI{100}{\kilo\meter}. This gives \SI{2106}{\mega\watt\hour} per year for the fleet.
+
+The charging is split into two sessions per week, one during the weekend and one on Wednesday or Thursday. With 104 sessions per year, the energy per session is approximately \SI{20.25}{\mega\watt\hour}. Each session is therefore represented by three hourly steps at a maximum of \SI{7}{\mega\watt}, with the last hour adjusted to match the required energy. Each session is placed in the consecutive hours with the lowest net demand within its allowed time window.
+
+The renewable supply calculation uses the 2024 wind and photovoltaic production profiles normalized by the installed capacities. For each \SI{1}{\mega\watt} of installed capacity, the energy that can be supplied during the charging hours without exceeding the charging demand is computed. The most effective renewable source is installed first, then the second source is added under the same no-curtailment condition.
+
+\begin{table}[H]
+  \centering
+  \caption{Wind and photovoltaic capacity for the electric vehicle charging case.}
+  \label{tab:exercise4-renewable-ev}
+  \begin{tabular}{lccc}
+    \toprule
+    Source & Energy supplied by \SI{1}{\mega\watt} & Installed capacity & Annual energy supplied \\
+    & (MWh/year) & (MW) & (MWh/year) \\
+    \midrule
+    Onshore wind & 87.74 & 7.88 & 691.21 \\
+    Solar PV & 66.99 & 1.90 & 126.65 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+The renewable production covers \SI{817.9}{\mega\watt\hour} per year, equal to 38.8\% of the charging demand. The remaining \SI{1288.1}{\mega\watt\hour} per year must be supplied by dispatchable production in the simplified stack. Figure~\ref{fig:exercise4-ev-week} shows the charging demand, the renewable contribution, and the residual backup requirement for the same January week used above.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.9\textwidth]{figures/exercise_4-3.pdf}
+  \caption{Electric vehicle charging demand and supply from 8 to 15 January 2024.}
+  \label{fig:exercise4-ev-week}
+\end{figure}
+
+The dispatchable backup required for the charging residual is reported in Table~\ref{tab:exercise4-dispatchable-ev}. The additional energy is supplied mainly by nuclear in low residual-demand periods and by gas in periods where the nuclear layer is already saturated. Oil is not used for this charging schedule.
+
+\begin{table}[H]
+  \centering
+  \caption{Dispatchable production required for the residual electric vehicle charging demand.}
+  \label{tab:exercise4-dispatchable-ev}
+  \begin{tabular}{lccccc}
+    \toprule
+    Technology & Capacity & Energy & Fuel quantity & Fuel cost & CO2 emissions \\
+    & (MW) & (MWh/year) & (MWh$_{th}$/year) & (EUR/year) & (tCO2/year) \\
+    \midrule
+    Nuclear & 6.56 & 879.01 & 2511.44 & 12557 & 0.00 \\
+    Coal & 0.00 & 0.00 & 0.00 & 0 & 0.00 \\
+    Gas CCGT & 6.62 & 409.13 & 681.89 & 20457 & 163.65 \\
+    Oil OCGT & 0.00 & 0.00 & 0.00 & 0 & 0.00 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+The total annual fuel cost for the residual charging demand is therefore approximately \SI{33014}{EUR/year}. The associated CO2 emissions are \SI{164}{tCO2/year}. The annualized investment cost of the required dispatchable production capacity is about EUR 3.68 million per year, dominated by the nuclear capacity required in the simplified stack. This value should be interpreted with caution, since the calculation assigns a full marginal capacity cost to a small charging demand and does not include the investment cost of wind or photovoltaic capacity. Renewable investment costs were not provided in the assignment data.
 
 \section{Optional study. Evolution of consumption}
 
