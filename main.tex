@@ -420,17 +420,17 @@ The production data are hourly average powers in megawatts. Annual electrical en
     \toprule
     Technology & Annual energy (TWh) & Share in mix (\%) \\
     \midrule
-    Nuclear & 375.17 & 71.54 \\
-    Run-of-river hydro & 72.17 & 13.78 \\
-    Onshore wind & 58.98 & 11.27 \\
-    Gas & 8.68 & 1.66 \\
-    Solar PV & 6.34 & 1.21 \\
-    Oil & 2.16 & 0.41 \\
+    Nuclear & 360.10 & 73.51 \\
+    Run-of-river hydro & 45.89 & 9.37 \\
+    Onshore wind & 41.91 & 8.56 \\
+    Gas & 17.23 & 3.52 \\
+    Solar PV & 23.32 & 4.76 \\
+    Oil & 1.39 & 0.28 \\
     \bottomrule
   \end{tabular}
 \end{table}
 
-Nuclear generation dominates the French production mix in 2024, accounting for approximately 71.5\% of the studied production sources. This reflects the long-standing role of nuclear power in the French electricity system. Run-of-river hydroelectric and onshore wind are the next largest contributors, together representing about 25\% of production. Natural gas and petroleum have lower annual output, reflecting their function as flexible or backup resources for peak demand and system balancing. Solar photovoltaic production, while growing, remains relatively modest in the total mix at this stage of deployment.
+Nuclear generation dominates the studied French production mix in 2024, accounting for approximately 73.5\% of the selected sources. This reflects the long-standing role of nuclear power in the French electricity system. Run-of-river hydro, onshore wind, and solar photovoltaic production are the next largest contributors. Natural gas and petroleum have lower annual output, reflecting their function as flexible or backup resources for peak demand and system balancing.
 
 \subsection{Capacity factors}
 
@@ -450,26 +450,26 @@ Table~\ref{tab:exercise2-capacity} presents the installed capacities, annual pro
     \toprule
     Technology & Capacity (MW) & Annual energy (TWh) & Capacity factor (\%) \\
     \midrule
-    Nuclear & 61175 & 375.17 & 70.49 \\
-    Run-of-river hydro & 12896 & 72.17 & 63.87 \\
-    Onshore wind & 20757 & 58.98 & 32.39 \\
-    Gas & 12906 & 8.68 & 7.71 \\
-    Solar PV & 16825 & 6.34 & 4.30 \\
-    Oil & 4447 & 2.16 & 5.48 \\
+    Nuclear & 61370 & 360.10 & 66.80 \\
+    Run-of-river hydro & 11598 & 45.89 & 45.05 \\
+    Onshore wind & 22134 & 41.91 & 21.56 \\
+    Gas & 13133 & 17.23 & 14.93 \\
+    Solar PV & 17419 & 23.32 & 15.24 \\
+    Oil & 3042 & 1.39 & 5.22 \\
     \bottomrule
   \end{tabular}
 \end{table}
 
-Nuclear power exhibits the highest capacity factor at approximately 70.5\%, indicating that nuclear plants operate nearly continuously throughout the year except for planned maintenance and refueling outages. Run-of-river hydroelectric plants achieve a capacity factor of 63.9\%, which is relatively high because river flows are generally available year-round, although not fully controllable.
+Nuclear power exhibits the highest capacity factor among the selected sources, at approximately 66.8\%. This is consistent with its role as a high-utilization generation source, although availability is affected by maintenance and operational constraints. Run-of-river hydro reaches 45.1\%, which remains high for a non-dispatchable renewable source because river flow is often available, although not fully controllable.
 
-Wind and solar technologies show considerably lower capacity factors. Onshore wind achieves 32.4\%, limited by intermittent wind conditions throughout the year. Solar photovoltaic has the lowest capacity factor at 4.3\% due to the fundamental constraint of daylight availability and cloud cover. These lower factors are characteristic of renewable technologies and necessitate supporting capacity or storage in systems with high renewable penetration.
+Wind and solar technologies show lower capacity factors. Onshore wind achieves 21.6\%, limited by intermittent wind conditions throughout the year. Solar photovoltaic reaches 15.2\%, which is consistent with production limited to daylight hours and affected by weather. These lower factors are characteristic of variable renewable technologies and necessitate supporting capacity or storage in systems with high renewable penetration.
 
-Natural gas and petroleum have the lowest capacity factors among the technologies studied, at 7.7\% and 5.5\% respectively. This reflects their role as flexible resources that operate primarily during peak demand periods and for system balancing, rather than as baseload generation.
+Natural gas and petroleum have low capacity factors, at 14.9\% and 5.2\% respectively. This reflects their role as flexible resources that operate primarily during peak demand periods and for system balancing, rather than as baseload generation.
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.95\textwidth]{figures/exercise_2-2.pdf}
-  \caption{Capacity factors by production technology in France, 2024. Nuclear and hydro achieve the highest utilization rates, while solar and petroleum operate infrequently.}
+  \caption{Capacity factors by production technology in France, 2024. Nuclear and run-of-river hydro achieve the highest utilization rates among the selected sources, while oil is used only for a small number of hours.}
   \label{fig:exercise2-capacity-factors}
 \end{figure}
 
@@ -493,14 +493,14 @@ Table~\ref{tab:exercise2-net-consumption} summarizes the statistics of gross con
     \toprule
     Quantity & Mean (GW) & Maximum (GW) & Minimum (GW) \\
     \midrule
-    Gross consumption & 49.06 & 82.80 & 29.58 \\
-    Must-run production & 11.55 & 37.51 & 0.08 \\
-    Net consumption & 37.51 & 73.38 & -4.08 \\
+    Gross consumption & 48.92 & 82.80 & 29.58 \\
+    Must-run production & 12.65 & 31.46 & 3.86 \\
+    Net consumption & 36.27 & 73.20 & 15.13 \\
     \bottomrule
   \end{tabular}
 \end{table}
 
-The average net consumption is 37.51 GW, representing approximately 76.4\% of average gross consumption. The mean must-run production is 11.55 GW, or 23.5\% of average gross consumption. Notably, net consumption can become negative when renewable generation exceeds total demand. In 2024, the minimum net consumption reaches 4.08 GW below zero, indicating periods when renewable production alone would exceed demand. In a real system, such situations require demand management, exports, or curtailment of renewable generation.
+The average net consumption is 36.27 GW, representing approximately 74.1\% of average gross consumption. The mean must-run production is 12.65 GW, or 25.9\% of average gross consumption. With the TD definition of must-run production, the net consumption remains positive in this data set. The minimum net consumption is \SI{15.13}{\giga\watt}.
 
 Figure~\ref{fig:exercise2-net-consumption-ts} displays the hourly net consumption time series throughout 2024. The seasonal pattern remains visible, with higher average net demand during winter months and lower demand in summer. However, the variability is dampened compared to gross consumption because renewable production tends to contribute more during winter months when wind speeds are typically higher, partially offsetting the elevated heating demand.
 
@@ -533,9 +533,9 @@ Figure~\ref{fig:exercise2-ldc} compares the load duration curves of gross consum
   \label{fig:exercise2-ldc}
 \end{figure}
 
-The net load duration curve lies entirely below the gross load duration curve, reflecting the reduction in residual demand provided by renewable generation. The average demand reduction is 11.55 GW, equivalent to 23.5\% of average gross consumption. However, the vertical separation between the two curves is not constant. During peak-load hours (left side of the curve), the gap is often smaller because peak demand typically occurs during winter evenings when wind generation may be significant but is not always guaranteed. Conversely, during low-load periods (right side of the curve), the gap can be substantial if renewable resources are particularly abundant.
+The net load duration curve lies entirely below the gross load duration curve, reflecting the reduction in residual demand provided by must-run production. The average demand reduction is 12.65 GW, equivalent to 25.9\% of average gross consumption. However, the vertical separation between the two curves is not constant. During peak-load hours, on the left side of the curve, the gap is often smaller because peak demand typically occurs during winter periods when solar production is limited and wind generation is not guaranteed. Conversely, during lower-load periods, the gap can be larger if wind, solar, and run-of-river hydro production are abundant.
 
-The net load duration curve is the appropriate demand profile for sizing dispatchable generation, energy storage, and import capacity in a system where renewables are prioritized. The maximum net load reaches approximately 73 GW, while the minimum dips below zero, indicating the need for demand flexibility or export capacity to handle surplus renewable generation. The shape of the net load curve, showing a relatively flat middle section and steep rise toward peak loads, is typical of systems with significant variable renewable penetration and implies that backup capacity must be maintained to handle peak-demand situations.
+The net load duration curve is the appropriate demand profile for sizing dispatchable generation, energy storage, and import capacity in a system where must-run renewables are prioritized. The maximum net load reaches approximately \SI{73.2}{\giga\watt}, and the minimum is approximately \SI{15.1}{\giga\watt}. The shape of the net load curve, with a relatively flat middle section and a steep rise toward peak loads, implies that backup capacity must still be maintained to handle peak-demand situations.
 
 \section{Exercise 3. Optimization of an adapted generation fleet}
 
@@ -664,7 +664,7 @@ Figure~\ref{fig:exercise3-dispatch-annual} compares the modeled dispatchable pro
   \label{fig:exercise3-dispatch-week}
 \end{figure}
 
-Table~\ref{tab:exercise3-dispatch-energy} compares the annual modeled energy with the recorded production. The modeled nuclear output is lower than the recorded nuclear output, while modeled gas generation is higher. This follows from the optimized capacity allocation and from the simplified treatment of the residual demand. In reality, nuclear production is not only a cost result. It is also affected by maintenance schedules, availability, operational constraints, exports, market operation, and system reserves. Gas production in the model absorbs a large fraction of residual variability because hydro reservoirs, imports, exports, and storage are not represented.
+Table~\ref{tab:exercise3-dispatch-energy} compares the annual modeled energy with the recorded production. The recorded gas and oil values use the data columns \textit{Fossil Gas} and \textit{Fossil Oil}. They are compared with the modeled gas CCGT and oil OCGT categories as the closest available aggregate measurements. The modeled nuclear output is lower than the recorded nuclear output, while modeled gas generation is higher. This follows from the optimized capacity allocation and from the simplified treatment of the residual demand. In reality, nuclear production is not only a cost result. It is also affected by maintenance schedules, availability, operational constraints, exports, market operation, and system reserves. Gas production in the model absorbs a large fraction of residual variability because hydro reservoirs, imports, exports, and storage are not represented.
 
 \begin{table}[H]
   \centering
@@ -675,9 +675,9 @@ Table~\ref{tab:exercise3-dispatch-energy} compares the annual modeled energy wit
     Technology & Modeled generation (TWh) & Recorded generation (TWh) \\
     \midrule
     Nuclear & 259.83 & 360.10 \\
-    Gas CCGT & 57.69 & 17.23 \\
-    Oil OCGT & 1.04 & 1.39 \\
-    Coal & 0.00 & 0.60 \\
+    Gas CCGT / Fossil Gas & 57.69 & 17.23 \\
+    Oil OCGT / Fossil Oil & 1.04 & 1.39 \\
+    Coal / Fossil Hard coal & 0.00 & 0.60 \\
     \bottomrule
   \end{tabular}
 \end{table}
